@@ -1,0 +1,36 @@
+.item {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  border: 1px solid transparent;
+  background-color: transparent;
+}
+
+img {
+  width: 80px;
+  padding-right: 10px;
+}
+
+.name {
+  font-size: 25px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.phone {
+  font-size: 20px;
+  margin: 0;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
