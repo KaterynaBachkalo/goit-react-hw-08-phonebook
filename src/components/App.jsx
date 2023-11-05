@@ -1,30 +1,75 @@
-import Filter from './Filter/Filter';
-import { ReactComponent as IconPhone } from '../../src/img/icon-phonebook.svg';
-import ContactList from './ContactList/ContactList';
-import ContactForm from './ContactForm/ContactForm';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchContacts } from 'redux/operations';
+import { Suspense, lazy, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshUserThunk } from 'redux/auth/operations';
+
+import RestrictedRoute from './RestrictedRoute';
+import PrivateRoute from './PrivateRoute';
+
+import { Loader } from './Loader';
+import Navigation from './Navigation';
+import { selectAuthIsLoading } from 'redux/auth/selectors';
+
+const HomePage = lazy(() => import('pages/HomePage'));
+const RegisterPage = lazy(() => import('pages/RegisterPage'));
+const LoginPage = lazy(() => import('pages/LoginPage'));
+const ContactsPage = lazy(() => import('pages/ContactsPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
+
+  const isRefreshing = useSelector(selectAuthIsLoading);
+
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUserThunk());
   }, [dispatch]);
+
+  const appRoutes = [
+    {
+      path: '/',
+      element: <HomePage />,
+    },
+    {
+      path: '/register',
+      element: (
+        <RestrictedRoute>
+          <RegisterPage />
+        </RestrictedRoute>
+      ),
+    },
+    {
+      path: '/login',
+      element: (
+        <RestrictedRoute>
+          <LoginPage />
+        </RestrictedRoute>
+      ),
+    },
+    {
+      path: '/contacts',
+      element: (
+        <PrivateRoute>
+          <ContactsPage />
+        </PrivateRoute>
+      ),
+    },
+  ];
+
   return (
-    <div className="container">
-      <div className="phonebook-wrapper">
-        <div className="phonebook-wrap">
-          <IconPhone />
-          <h1 className="phonebook-title">Phonebook</h1>
-        </div>
-        <ContactForm />
-      </div>
+    <>
+      <Navigation />
 
-      <h2 className="contacts-title">Contacts</h2>
-      <Filter />
-
-      <ContactList />
-    </div>
+      {isRefreshing ? (
+        <Loader />
+      ) : (
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            {appRoutes.map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+          </Routes>
+        </Suspense>
+      )}
+    </>
   );
 };

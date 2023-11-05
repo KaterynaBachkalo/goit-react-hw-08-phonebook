@@ -3,6 +3,7 @@ import { fetchContacts, addContact, deleteContact } from './operations';
 
 const handlePending = state => {
   state.isLoading = true;
+  state.error = null;
 };
 
 const handleRejected = (state, action) => {
@@ -17,10 +18,9 @@ const INITIAL_STATE = {
 };
 
 const contactsSlice = createSlice({
-  // Ім'я слайсу
   name: 'contacts',
-  // Початковий стан редюсера слайсу
   initialState: INITIAL_STATE,
+
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, handlePending)
@@ -42,7 +42,6 @@ const contactsSlice = createSlice({
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(state.items);
         state.items = state.items.filter(
           contact => contact.id !== action.payload.id
         );

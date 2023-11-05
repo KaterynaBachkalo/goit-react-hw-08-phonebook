@@ -1,13 +1,13 @@
-import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/operations';
-import ContactItem from 'components/ContactItem/ContactItem';
+import { deleteContact } from 'redux/contacts/operations';
+import ContactItem from 'components/ContactItem';
 import {
   selectError,
   selectIsLoading,
   selectVisibleContacts,
-} from 'redux/selectors';
-import { Loader } from 'components/Loader/Loader';
+} from 'redux/contacts/selectors';
+import { Loader } from 'components/Loader';
+import { List } from '@mui/material';
 
 const ContactList = () => {
   const isLoading = useSelector(selectIsLoading);
@@ -22,20 +22,20 @@ const ContactList = () => {
   const filteredContacts = useSelector(selectVisibleContacts);
 
   return (
-    <ul className={css.list}>
+    <List sx={{ width: '100%', maxWidth: 650, margin: 'auto' }}>
       {isLoading && <Loader />}
       {error && <p className="error">{error}</p>}
       {!isLoading &&
-        filteredContacts?.map(({ name, id, phone }) => (
+        filteredContacts?.map(({ name, id, number }) => (
           <ContactItem
             name={name}
             id={id}
             key={id}
-            phone={phone}
+            number={number}
             deleteContact={onDeleteContact}
           />
         ))}
-    </ul>
+    </List>
   );
 };
 

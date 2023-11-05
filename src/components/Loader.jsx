@@ -1,9 +1,14 @@
+import { Box } from '@mui/material';
 import { Vortex } from 'react-loader-spinner';
-import css from './Loader.module.css';
 
 export const Loader = () => {
   return (
-    <div className={css.loader}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       <Vortex
         visible={true}
         height="80"
@@ -13,6 +18,6 @@ export const Loader = () => {
         wrapperClass="vortex-wrapper"
         colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
       />
-    </div>
+    </Box>
   );
 };
