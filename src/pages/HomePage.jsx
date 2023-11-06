@@ -2,7 +2,7 @@ import { Avatar, Box, Container, Link, Typography } from '@mui/material';
 import React from 'react';
 import image from '../img/phonebook.png';
 import { NavLink } from 'react-router-dom';
-import { secondBrandColor, brandColor } from 'constants/constants';
+import { brandColor } from 'constants/constants';
 
 const HomePage = () => {
   return (

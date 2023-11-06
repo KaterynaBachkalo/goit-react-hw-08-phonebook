@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   AppBar,
-  Avatar,
   Box,
   Button,
   Container,
@@ -12,11 +11,9 @@ import {
   Stack,
   SvgIcon,
   Toolbar,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import AdbIcon from '@mui/icons-material/Adb';
 
 import { ReactComponent as IconPhone } from '../img/icon-phonebook.svg';
 import { NavLink, useLocation } from 'react-router-dom';
