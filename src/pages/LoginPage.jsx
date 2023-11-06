@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { brandColor, brandColorShadow } from 'constants/constants';
+import { brandColor, formStyles } from 'constants/constants';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -39,24 +39,10 @@ const LoginPage = () => {
   return (
     <Box
       sx={{
-        padding: '120px 0',
+        padding: '120px 15px',
       }}
     >
-      <Box
-        component="form"
-        sx={{
-          width: '400px',
-          display: 'flex',
-          flexDirection: 'column',
-          margin: '0 auto',
-          padding: '40px 15px ',
-          gap: '10px',
-          border: `1px solid ${brandColor}`,
-          borderRadius: '10px',
-          boxShadow: `0px 1px 19px 8px ${brandColorShadow}`,
-        }}
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <Box component="form" sx={formStyles} onSubmit={handleSubmit(onSubmit)}>
         <TextField
           required
           id="standard-email-input"

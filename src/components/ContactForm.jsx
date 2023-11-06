@@ -4,6 +4,7 @@ import { addContact } from 'redux/contacts/operations';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/contacts/selectors';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { toast } from 'react-toastify';
 
 const ContactForm = () => {
   const {
@@ -23,7 +24,16 @@ const ContactForm = () => {
     );
 
     if (isExistContactName) {
-      alert(`${newContacts.name} is already in contacts`);
+      toast.warn(`${newContacts.name} is already in contacts`, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       return;
     }
 
@@ -35,7 +45,7 @@ const ContactForm = () => {
     <Box
       component="form"
       sx={{
-        width: '400px',
+        maxWidth: '400px',
         display: 'flex',
         flexDirection: 'column',
         margin: '0 auto',

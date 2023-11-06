@@ -10,7 +10,7 @@ import {
   InputAdornment,
   TextField,
 } from '@mui/material';
-import { brandColor, brandColorShadow } from 'constants/constants';
+import { brandColor, formStyles } from 'constants/constants';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const RegisterPage = () => {
@@ -36,25 +36,10 @@ const RegisterPage = () => {
   return (
     <Box
       sx={{
-        padding: '120px 0',
-        // bgcolor: '#ffe2a9',
+        padding: '120px 15px',
       }}
     >
-      <Box
-        component="form"
-        sx={{
-          width: '400px',
-          display: 'flex',
-          flexDirection: 'column',
-          margin: '0 auto',
-          padding: '40px 15px ',
-          gap: '10px',
-          border: `1px solid ${brandColor}`,
-          borderRadius: '10px',
-          boxShadow: `0px 1px 19px 8px ${brandColorShadow}`,
-        }}
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <Box component="form" sx={formStyles} onSubmit={handleSubmit(onSubmit)}>
         <TextField
           required
           id="standard-name-input"

@@ -5,6 +5,7 @@ import {
   logOutThunk,
   refreshUserThunk,
 } from './operations';
+import { toast } from 'react-toastify';
 
 const handlePending = state => {
   state.isLoading = true;
@@ -16,7 +17,16 @@ const handleRejected = (state, action) => {
   state.error = action.payload;
 
   if (state.error === 400) {
-    alert('The email or password are incorrect');
+    toast.error('The email or password are incorrect', {
+      position: 'top-center',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    });
   }
 };
 

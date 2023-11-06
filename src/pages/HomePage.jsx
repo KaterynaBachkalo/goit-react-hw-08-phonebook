@@ -1,55 +1,66 @@
-import { Avatar, Box, Link, Typography } from '@mui/material';
+import { Avatar, Box, Container, Link, Typography } from '@mui/material';
 import React from 'react';
 import image from '../img/phonebook.png';
 import { NavLink } from 'react-router-dom';
+import { secondBrandColor, brandColor } from 'constants/constants';
 
 const HomePage = () => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '30px',
-        padding: '100px',
-      }}
-    >
-      <Avatar
-        src={image}
-        alt="phonebook"
-        variant="square"
+    <Container>
+      <Box
         sx={{
-          width: '50%',
-          height: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '20px',
+          padding: '100px 0',
         }}
-      />
-      <Box>
-        <Typography fontSize="20px">
-          Hello! Here you can save, add and find you phone contacts.
-        </Typography>
-        <Typography fontSize="20px">
-          <Link
-            to="/register"
-            component={NavLink}
-            sx={{
-              textDecoration: 'none',
-            }}
+      >
+        <Avatar
+          src={image}
+          alt="phonebook"
+          variant="square"
+          sx={{
+            width: '400px',
+            height: '400px',
+          }}
+        />
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography
+            fontSize="36px"
+            marginBottom="20px"
+            color={brandColor}
+            textTransform={'uppercase'}
           >
-            Register
-          </Link>{' '}
-          or{' '}
-          <Link
-            to="/login"
-            component={NavLink}
-            sx={{
-              textDecoration: 'none',
-            }}
-          >
-            login
-          </Link>{' '}
-          to manage your contacts.
-        </Typography>
+            Phone Book Application
+          </Typography>
+          <Typography fontSize="30px">
+            Here you can save, add and find you phone contacts.
+          </Typography>
+          <Typography fontSize="30px">
+            <Link
+              to="/register"
+              component={NavLink}
+              sx={{
+                textDecoration: 'none',
+              }}
+            >
+              Register
+            </Link>{' '}
+            or{' '}
+            <Link
+              to="/login"
+              component={NavLink}
+              sx={{
+                textDecoration: 'none',
+              }}
+            >
+              login
+            </Link>{' '}
+            to manage your contacts.
+          </Typography>
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

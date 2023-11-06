@@ -1,27 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
+  Avatar,
   Box,
   Button,
   Container,
+  IconButton,
   Link,
+  Menu,
+  MenuItem,
   Stack,
   SvgIcon,
   Toolbar,
+  Tooltip,
   Typography,
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import AdbIcon from '@mui/icons-material/Adb';
 
 import { ReactComponent as IconPhone } from '../img/icon-phonebook.svg';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthAuthenticated, selectAuthUser } from 'redux/auth/selectors';
 import { logOutThunk } from 'redux/auth/operations';
+import { hoverFocusStyles, linkStylesNav } from 'constants/constants';
 
 const Navigation = () => {
   const authenticated = useSelector(selectAuthAuthenticated);
   const dispatch = useDispatch();
   const location = useLocation();
   const userName = useSelector(selectAuthUser);
+
+  //-------------
+
+  const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const handleOpenNavMenu = event => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  //------------
 
   const onLogOut = () => {
     dispatch(logOutThunk());
@@ -64,6 +86,9 @@ const Navigation = () => {
                   color="#fff"
                   sx={{
                     textDecoration: 'none',
+                    marginRight: { xs: '140px', md: '0' },
+
+                    ...hoverFocusStyles,
                   }}
                 >
                   Phonebook
@@ -84,17 +109,7 @@ const Navigation = () => {
                     location.pathname === '/register' ? 'active-link' : ''
                   }
                   component={NavLink}
-                  sx={{
-                    textDecoration: 'none',
-                    textTransform: 'uppercase',
-                    fontSize: '24px',
-                    '&.active-link': {
-                      borderRadius: '10px',
-                      padding: '10px',
-                      border: '1px solid #fff',
-                    },
-                    color: '#fff',
-                  }}
+                  sx={linkStylesNav}
                 >
                   Register
                 </Link>
@@ -104,17 +119,7 @@ const Navigation = () => {
                     location.pathname === '/login' ? 'active-link' : ''
                   }
                   component={NavLink}
-                  sx={{
-                    textDecoration: 'none',
-                    textTransform: 'uppercase',
-                    fontSize: '24px',
-                    '&.active-link': {
-                      borderRadius: '10px',
-                      border: '1px solid #fff',
-                      padding: '10px',
-                    },
-                    color: '#fff',
-                  }}
+                  sx={linkStylesNav}
                 >
                   Login
                 </Link>
@@ -126,16 +131,19 @@ const Navigation = () => {
                     to="/contacts"
                     component={NavLink}
                     sx={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
+                      fontSize: '24px',
                       textDecoration: 'none',
                       textTransform: 'uppercase',
-                      fontSize: '24px',
-
                       color: '#fff',
+
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      padding: '10px',
+
                       borderRadius: '10px',
                       border: '1px solid #fff',
-                      padding: '10px',
+                      // display: { xs: 'none', md: 'inline-flex' },
+                      ...hoverFocusStyles,
                     }}
                   >
                     Contacts
@@ -154,16 +162,102 @@ const Navigation = () => {
                       color: 'rgb(255, 171, 64)',
                       fontSize: '24px',
                       fontWeight: '700',
+                      display: { xs: 'none', md: 'flex' },
                     }}
                   >
                     {userName.name}
                   </Typography>
-                  <Button onClick={onLogOut} color="inherit" variant="outlined">
+                  <Button
+                    onClick={onLogOut}
+                    color="inherit"
+                    variant="outlined"
+                    sx={{ display: { xs: 'none', md: 'flex' } }}
+                  >
                     Log Out
                   </Button>
                 </Box>
               </>
             )}
+
+            {/* //---------------Menu----------------- */}
+
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'flex', md: 'none' },
+                justifyContent: 'flex-end',
+              }}
+            >
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon fontSize="40px" />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {!authenticated ? (
+                  <div>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Link
+                        to="/register"
+                        className={
+                          location.pathname === '/register' ? 'active-link' : ''
+                        }
+                        component={NavLink}
+                        sx={{
+                          textDecoration: 'none',
+                        }}
+                      >
+                        Register
+                      </Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Link
+                        to="/login"
+                        className={
+                          location.pathname === '/login' ? 'active-link' : ''
+                        }
+                        component={NavLink}
+                        sx={{
+                          textDecoration: 'none',
+                        }}
+                      >
+                        Login
+                      </Link>
+                    </MenuItem>
+                  </div>
+                ) : (
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Button onClick={onLogOut} variant="text">
+                      Log Out
+                    </Button>
+                  </MenuItem>
+                )}
+              </Menu>
+            </Box>
+
+            {/* //---------------Menu----------------- */}
           </Toolbar>
         </nav>
       </Container>
